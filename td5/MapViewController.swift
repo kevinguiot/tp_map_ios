@@ -8,6 +8,7 @@
 
 import UIKit
 import SWXMLHash
+import MapKit
 
 
 struct Poi {
@@ -19,17 +20,20 @@ struct Poi {
 }
 
 class MapViewController: UIViewController {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let map = MKMapView()
+        map.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        
+        var poisList = [Poi]()
 
         if let url = URL(string: "http://dam.lanoosphere.com/poi.xml") {
             
             if let data = try? Data(contentsOf: url) {
                 
                 let xml = SWXMLHash.parse(data)
-                
-                var poisList = [Poi]()
                 
                 for pois in xml["Data"]["POI"].all {
 
@@ -43,11 +47,26 @@ class MapViewController: UIViewController {
                    
                     poisList.append(poi);
                 }
- 
+
             }
         }
-
-        // Do any additional setup after loading the view.
+        
+        for pois in poisList {
+            
+            //On créé le POI
+            let poi = MKPointAnnotation();
+            
+            //On y rajoute les coordonnées
+            poi.coordinate = CLLocationCoordinate2DMake(
+                CLLocationDegrees(pois.Latitude),
+                CLLocationDegrees(pois.Longitude)
+            )
+            
+            //On l'ajoute à la map
+            map.addAnnotation(poi)
+        }
+        
+        self.view.addSubview(map);
     }
 
     override func didReceiveMemoryWarning() {
