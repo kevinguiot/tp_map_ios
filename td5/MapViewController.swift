@@ -74,8 +74,11 @@ class MapViewController: UIViewController {
 
             //On place le reverseGeocodeLocation
             CLGeocoder().reverseGeocodeLocation(location, completionHandler: {(placemarks, error) -> Void in
-
+                let addresse = getAddress(placemark: (placemarks?[0])!)
             })
+            
+            //On rajoute le pin à la map
+            map.addAnnotation(poi);
         }
 
         self.view.addSubview(map);
@@ -86,4 +89,47 @@ class MapViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+}
+
+//Fonction permettant de récupérer une adresse d'un marqueur
+func getAddress(placemark : CLPlacemark) -> String {
+    
+    var adresse : String = ""
+    
+    /*format Chine*/
+    if placemark.isoCountryCode == "TW" {
+        if placemark.country != nil {
+            adresse = placemark.country!
+        }
+        if placemark.subAdministrativeArea != nil {
+            adresse = adresse + placemark.subAdministrativeArea! + ", "
+        }
+        if placemark.postalCode != nil {
+            adresse = adresse + placemark.postalCode! + " "
+        }
+        if placemark.locality != nil {
+            adresse = adresse + placemark.locality!
+        }
+        if placemark.thoroughfare != nil {
+            adresse = adresse + placemark.thoroughfare!
+        }
+        if placemark.subThoroughfare != nil {
+            adresse = adresse + placemark.subThoroughfare!
+        }
+    } else {
+        if placemark.subThoroughfare != nil {
+            adresse = placemark.subThoroughfare! + " "
+        }
+        if placemark.thoroughfare != nil {
+            adresse = adresse + placemark.thoroughfare! + ", "
+        }
+        if placemark.postalCode != nil {
+            adresse = adresse + placemark.postalCode! + " "
+        }
+        if placemark.locality != nil {
+            adresse = adresse + placemark.locality!
+        }
+    }
+    
+    return adresse
 }
