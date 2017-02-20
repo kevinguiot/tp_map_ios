@@ -56,22 +56,28 @@ class MapViewController: UIViewController {
 
             }
         }
-        
+
+        //Parcourt des pins
         for pois in poisList {
             
             //On créé le POI
             let poi = MKPointAnnotation();
             
+            let longitude = CLLocationDegrees(pois.Longitude)
+            let latitude  = CLLocationDegrees(pois.Latitude)
+
+            let location = CLLocation(latitude: latitude, longitude: longitude)
+            let coordinate = CLLocationCoordinate2DMake(latitude, longitude);
+
             //On y rajoute les coordonnées
-            poi.coordinate = CLLocationCoordinate2DMake(
-                CLLocationDegrees(pois.Latitude),
-                CLLocationDegrees(pois.Longitude)
-            )
-            
-            //On l'ajoute à la map
-            map.addAnnotation(poi)
+            poi.coordinate = coordinate
+
+            //On place le reverseGeocodeLocation
+            CLGeocoder().reverseGeocodeLocation(location, completionHandler: {(placemarks, error) -> Void in
+
+            })
         }
-        
+
         self.view.addSubview(map);
     }
 
