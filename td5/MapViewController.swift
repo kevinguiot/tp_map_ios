@@ -24,9 +24,15 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Gestion de la map
         let map = MKMapView()
         map.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        map.mapType = MKMapType.standard
+        map.isZoomEnabled = true
+        map.isScrollEnabled = true
+        map.center = view.center
         
+        //Liste des pins
         var poisList = [Poi]()
 
         if let url = URL(string: "http://dam.lanoosphere.com/poi.xml") {
