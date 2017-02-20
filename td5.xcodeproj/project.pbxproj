@@ -15,6 +15,7 @@
 		DBEC39E01E5B1B2100F3D8C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DBEC39DE1E5B1B2100F3D8C9 /* LaunchScreen.storyboard */; };
 		DBEC39EB1E5B1B2100F3D8C9 /* td5Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEC39EA1E5B1B2100F3D8C9 /* td5Tests.swift */; };
 		DBEC39F61E5B1B2100F3D8C9 /* td5UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEC39F51E5B1B2100F3D8C9 /* td5UITests.swift */; };
+		DBEC3A051E5B2FE200F3D8C9 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBEC3A041E5B2FE200F3D8C9 /* MapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		DBEC39F51E5B1B2100F3D8C9 /* td5UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = td5UITests.swift; sourceTree = "<group>"; };
 		DBEC39F71E5B1B2100F3D8C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DBEC3A031E5B1C9400F3D8C9 /* gps.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = gps.gpx; path = ../gps.gpx; sourceTree = "<group>"; };
+		DBEC3A041E5B2FE200F3D8C9 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		F839FD006BFFAC97C2FA302E /* Pods-td5.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-td5.debug.xcconfig"; path = "Pods/Target Support Files/Pods-td5/Pods-td5.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -129,6 +131,7 @@
 				DBEC39DC1E5B1B2100F3D8C9 /* Assets.xcassets */,
 				DBEC39DE1E5B1B2100F3D8C9 /* LaunchScreen.storyboard */,
 				DBEC39E11E5B1B2100F3D8C9 /* Info.plist */,
+				DBEC3A041E5B2FE200F3D8C9 /* MapViewController.swift */,
 			);
 			path = td5;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DBEC39D81E5B1B2100F3D8C9 /* ViewController.swift in Sources */,
+				DBEC3A051E5B2FE200F3D8C9 /* MapViewController.swift in Sources */,
 				DBEC39D61E5B1B2100F3D8C9 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -584,6 +588,7 @@
 				DBEC39FC1E5B1B2100F3D8C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DBEC39FD1E5B1B2100F3D8C9 /* Build configuration list for PBXNativeTarget "td5Tests" */ = {
 			isa = XCConfigurationList;
@@ -592,6 +597,7 @@
 				DBEC39FF1E5B1B2100F3D8C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DBEC3A001E5B1B2100F3D8C9 /* Build configuration list for PBXNativeTarget "td5UITests" */ = {
 			isa = XCConfigurationList;
@@ -600,6 +606,7 @@
 				DBEC3A021E5B1B2100F3D8C9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
