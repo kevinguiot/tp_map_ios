@@ -30,7 +30,7 @@ class MapViewController: UIViewController {
         map.mapType = MKMapType.standard
         map.isZoomEnabled = true
         map.isScrollEnabled = true
-        map.center = view.center
+        map.centerCoordinate = CLLocationCoordinate2D(latitude: 43.551534,longitude: 7.016659);
         
         //Liste des pins
         var poisList = [Poi]()
