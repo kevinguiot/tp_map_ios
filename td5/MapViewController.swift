@@ -9,6 +9,7 @@
 import UIKit
 import SWXMLHash
 import MapKit
+import CoreLocation
 
 struct Poi {
     var Id : Int;
@@ -18,7 +19,7 @@ struct Poi {
     var Longitude : Float;
 }
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +36,7 @@ class MapViewController: UIViewController {
         map.mapType = MKMapType.standard
         map.isZoomEnabled = true
         map.isScrollEnabled = true
+        map.showsUserLocation = true
         
         //Ajout du centre
         map.centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(coordinatesCannes[0]),longitude: CLLocationDegrees(coordinatesCannes[1]));
@@ -50,7 +52,7 @@ class MapViewController: UIViewController {
         
         let region = MKCoordinateRegionMake(location, span);
         map.setRegion(region, animated: false)
-        
+
         //Liste des pins
         var poisList = [Poi]()
 
@@ -72,7 +74,6 @@ class MapViewController: UIViewController {
                    
                     poisList.append(poi);
                 }
-
             }
         }
 
