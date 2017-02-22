@@ -10,7 +10,6 @@ import UIKit
 import SWXMLHash
 import MapKit
 
-
 struct Poi {
     var Id : Int;
     var Name : String;
@@ -24,13 +23,33 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Coordonnées de Cannes
+        let coordinatesCannes: [Float] = [
+            43.551534,
+            7.016659
+        ];
+        
         //Gestion de la map
         let map = MKMapView()
         map.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         map.mapType = MKMapType.standard
         map.isZoomEnabled = true
         map.isScrollEnabled = true
-        map.centerCoordinate = CLLocationCoordinate2D(latitude: 43.551534,longitude: 7.016659);
+        
+        //Ajout du centre
+        map.centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(coordinatesCannes[0]),longitude: CLLocationDegrees(coordinatesCannes[1]));
+        
+        //Ajout du zoom sur Cannes
+        let latDelta:CLLocationDegrees = 0.05
+        let lonDelta:CLLocationDegrees = 0.05
+        let span = MKCoordinateSpanMake(latDelta, lonDelta)
+        let location = CLLocationCoordinate2DMake(
+            CLLocationDegrees(coordinatesCannes[0]),
+            CLLocationDegrees(coordinatesCannes[1])
+        )
+        
+        let region = MKCoordinateRegionMake(location, span);
+        map.setRegion(region, animated: false)
         
         //Liste des pins
         var poisList = [Poi]()
