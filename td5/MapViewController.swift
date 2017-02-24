@@ -21,6 +21,8 @@ struct Poi {
 
 class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
+    @IBOutlet weak var map: MKMapView!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -29,9 +31,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             43.551534,
             7.016659
         ];
-        
+
         //Gestion de la map
-        let map = MKMapView()
         map.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
         map.mapType = MKMapType.standard
         map.isZoomEnabled = true
@@ -82,7 +83,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
             //On créé le POI
             let poi = MKPointAnnotation();
-            
+
             let longitude = CLLocationDegrees(pois.Longitude)
             let latitude  = CLLocationDegrees(pois.Latitude)
 
@@ -108,7 +109,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 }
 
 //Fonction permettant de récupérer une adresse d'un marqueur
