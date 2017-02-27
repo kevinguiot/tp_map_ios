@@ -21,11 +21,13 @@ struct Poi {
 
 class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
+    //Création de la map
+    var map = MKMapView();
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        //Création de la map
-        var map = MKMapView();
+       
+        map.delegate = self
         
         //Coordonnées de Cannes
         let coordinatesCannes: [Float] = [
@@ -104,15 +106,29 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             
             //On rajoute le nom du pin
             poi.title = pois.Name;
-
-            //On rajoute le pin à la map
-            map.addAnnotation(poi);
+            
+            let pinAnnotationView = MKPinAnnotationView(annotation: poi, reuseIdentifier: String(pois.Id))
+            
+            map.addAnnotation(pinAnnotationView.annotation!)
         }
-
+        
         self.view.addSubview(map);
     }
+    
+    //Fonction pour afficher le MKAnnotationView
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: String(annotation.hash))
+        
+        let rightButton = UIButton(type: .detailDisclosure)
+        rightButton.tag = annotation.hash
+        
+        pinView.animatesDrop = true
+        pinView.canShowCallout = true
+        pinView.rightCalloutAccessoryView = rightButton
+        
+        return pinView
+    }
 }
-
 
 
 //Fonction permettant de récupérer une adresse d'un marqueur
