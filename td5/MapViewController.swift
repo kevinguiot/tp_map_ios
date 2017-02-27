@@ -128,6 +128,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         return pinView
     }
+
+    //On récupère l'événement du click sur le bouton i
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+
+    }
 }
 
 
