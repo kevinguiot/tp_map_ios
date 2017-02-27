@@ -20,11 +20,12 @@ struct Poi {
 }
 
 class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
-    
-    @IBOutlet weak var map: MKMapView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //Création de la map
+        var map = MKMapView();
         
         //Coordonnées de Cannes
         let coordinatesCannes: [Float] = [
@@ -84,32 +85,35 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             //On créé le POI
             let poi = MKPointAnnotation();
 
+            //On récupère les coordonnées
             let longitude = CLLocationDegrees(pois.Longitude)
             let latitude  = CLLocationDegrees(pois.Latitude)
-
             let location = CLLocation(latitude: latitude, longitude: longitude)
             let coordinate = CLLocationCoordinate2DMake(latitude, longitude);
 
             //On y rajoute les coordonnées
             poi.coordinate = coordinate
 
-            //On place le reverseGeocodeLocation
-            CLGeocoder().reverseGeocodeLocation(location, completionHandler: {(placemarks, error) -> Void in
-                let addresse = getAddress(placemark: (placemarks?[0])!)
+            //On récupère l'adresse de l'emplacement
+            CLGeocoder().reverseGeocodeLocation(location, completionHandler: {(placemarks, error) in
+                let address = getAddress(placemark: (placemarks?[0])!)
+                
+                //On rajoute l'adresse du pin
+                poi.subtitle = address;
             })
             
+            //On rajoute le nom du pin
+            poi.title = pois.Name;
+
             //On rajoute le pin à la map
             map.addAnnotation(poi);
         }
 
         self.view.addSubview(map);
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 }
+
+
 
 //Fonction permettant de récupérer une adresse d'un marqueur
 func getAddress(placemark : CLPlacemark) -> String {
