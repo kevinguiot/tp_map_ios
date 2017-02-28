@@ -117,7 +117,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     //Fonction pour afficher le MKAnnotationView
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: String(annotation.hash))
+        let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: String(50))
         
         let rightButton = UIButton(type: .detailDisclosure)
         rightButton.tag = annotation.hash
@@ -128,13 +128,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         return pinView
     }
-
-    //On récupère l'événement du click sur le bouton i
-    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-
+    
+    //Fonction pour détecter le bouton (i)
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        NSLog(view.reuseIdentifier!);
     }
 }
 
+ 
 
 //Fonction permettant de récupérer une adresse d'un marqueur
 func getAddress(placemark : CLPlacemark) -> String {
