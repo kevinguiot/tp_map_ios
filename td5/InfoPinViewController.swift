@@ -9,13 +9,13 @@
 import UIKit
 
 class InfoPinViewController: UIViewController {
-
+    
+    var poi = Poi()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.title = "ok";
-        
-    
+      
+        self.title = poi.Name;
 
         // Do any additional setup after loading the view.
     }

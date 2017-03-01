@@ -11,13 +11,14 @@ import SWXMLHash
 import MapKit
 import CoreLocation
 
-struct Poi {
-    var Id : Int;
-    var Name : String;
-    var Image : String;
-    var Latitude : Float;
-    var Longitude : Float;
+public class Poi {
+    var Id : Int = 0;
+    var Name : String = "";
+    var Image : String = "";
+    var Latitude : Float = 0.0;
+    var Longitude : Float = 0.0;
 }
+
 
 class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
@@ -69,14 +70,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                 
                 for pois in xml["Data"]["POI"].all {
 
-                    let poi = Poi(
-                        Id: Int((pois.element?.allAttributes["id"]?.text)!)!,
-                        Name: (pois.element?.allAttributes["name"]?.text)!,
-                        Image: (pois.element?.allAttributes["image"]?.text)!,
-                        Latitude: Float((pois.element?.allAttributes["latitude"]?.text)!)!,
-                        Longitude: Float((pois.element?.allAttributes["longitude"]?.text)!)!
-                    )
-                   
+                    let poi = Poi();
+                    
+                    poi.Id = Int((pois.element?.allAttributes["id"]?.text)!)!
+                    poi.Name = (pois.element?.allAttributes["name"]?.text)!
+                    poi.Image = (pois.element?.allAttributes["image"]?.text)!
+                    poi.Latitude = Float((pois.element?.allAttributes["latitude"]?.text)!)!
+                    poi.Longitude = Float((pois.element?.allAttributes["longitude"]?.text)!)!
+                    
                     poisList.append(poi);
                     poisListString.append(poi.Name);
                 }
@@ -112,7 +113,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         self.view.addSubview(map);
     }
 
-    
     //Fonction pour afficher le MKAnnotationView
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: String(50))
@@ -131,8 +131,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
         //On récupère le poi
         let poi = getPin(title: (view.annotation?.title!)!)
+        
+        //On créer une nouvelle vue
+        let vue = InfoPinViewController();
+        
+        //On envoie le poi
+        vue.poi = poi
+        
+        //On ajoute la nouvelle vue
+        navigationController?.pushViewController(vue, animated: true)
     }
     
+    //Fonction permettant de récupérer un poi en fonction de son nom
     func getPin(title: String) -> Poi {
         
         //On récupère l'indice du poi dans le tableau de string
