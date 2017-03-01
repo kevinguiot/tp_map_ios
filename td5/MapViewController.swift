@@ -128,9 +128,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     //Fonction pour détecter le bouton (i)
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        
-        //On récupère le titre du pin
-        let title = (view.annotation?.title!)!
+
+        //On récupère le poi
+        let poi = getPin(title: (view.annotation?.title!)!)
+    }
+    
+    func getPin(title: String) -> Poi {
         
         //On récupère l'indice du poi dans le tableau de string
         let indicePoi = (poisListString.index(of: title)!)
@@ -138,6 +141,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         //On récupère le poi
         let poi = poisList[indicePoi]
         
+        return poi
     }
 }
 
