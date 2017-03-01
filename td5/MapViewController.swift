@@ -24,6 +24,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     //Création de la map
     var map = MKMapView();
     
+    //Liste des pins
+    var poisList = [Poi]()
+    var poisListString = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        
@@ -56,10 +60,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         let region = MKCoordinateRegionMake(location, span);
         map.setRegion(region, animated: false)
-
-        //Liste des pins
-        var poisList = [Poi]()
-
+        
         if let url = URL(string: "http://dam.lanoosphere.com/poi.xml") {
             
             if let data = try? Data(contentsOf: url) {
@@ -77,15 +78,15 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                     )
                    
                     poisList.append(poi);
+                    poisListString.append(poi.Name);
                 }
             }
         }
 
         //Parcourt des pins
         for pois in poisList {
-            
-            //On créé le POI
-            let poi = MKPointAnnotation();
+
+            let poi = MKPointAnnotation()
 
             //On récupère les coordonnées
             let longitude = CLLocationDegrees(pois.Longitude)
@@ -93,32 +94,28 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             let location = CLLocation(latitude: latitude, longitude: longitude)
             let coordinate = CLLocationCoordinate2DMake(latitude, longitude);
 
-            //On y rajoute les coordonnées
             poi.coordinate = coordinate
 
             //On récupère l'adresse de l'emplacement
             CLGeocoder().reverseGeocodeLocation(location, completionHandler: {(placemarks, error) in
                 let address = getAddress(placemark: (placemarks?[0])!)
-                
-                //On rajoute l'adresse du pin
                 poi.subtitle = address;
             })
             
-            //On rajoute le nom du pin
-            poi.title = pois.Name;
-            
-            let pinAnnotationView = MKPinAnnotationView(annotation: poi, reuseIdentifier: String(pois.Id))
+            poi.title = pois.Name
+
+            let pinAnnotationView = MKPinAnnotationView(annotation: poi, reuseIdentifier: pois.Name)
             
             map.addAnnotation(pinAnnotationView.annotation!)
         }
         
         self.view.addSubview(map);
     }
+
     
     //Fonction pour afficher le MKAnnotationView
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: String(50))
-        
         let rightButton = UIButton(type: .detailDisclosure)
         rightButton.tag = annotation.hash
         
@@ -131,11 +128,20 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     
     //Fonction pour détecter le bouton (i)
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        NSLog(view.reuseIdentifier!);
+        
+        //On récupère le titre du pin
+        let title = (view.annotation?.title!)!
+        
+        //On récupère l'indice du poi dans le tableau de string
+        let indicePoi = (poisListString.index(of: title)!)
+        
+        //On récupère le poi
+        let poi = poisList[indicePoi]
+        
     }
 }
 
- 
+
 
 //Fonction permettant de récupérer une adresse d'un marqueur
 func getAddress(placemark : CLPlacemark) -> String {
