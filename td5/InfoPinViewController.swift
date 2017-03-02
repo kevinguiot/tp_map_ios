@@ -7,15 +7,37 @@
 //
 
 import UIKit
+import MapKit
 
 class InfoPinViewController: UIViewController {
     
+    //Outlets
+    @IBOutlet weak var image: UIImageView!
+    @IBOutlet weak var map: MKMapView!
+    
+    
+    //Actions
+    @IBAction func call(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func openMap(_ sender: UIButton) {
+        
+    }
+    
+    @IBAction func share(_ sender: UIButton) {
+        
+    }
+    
+    //Déclarations
     var poi = Poi()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         print(poi.Name)
+        print(poi.Image)
+ 
         
         self.title = poi.Name;
         // Do any additional setup after loading the view.

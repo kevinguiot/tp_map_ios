@@ -62,6 +62,9 @@
                                     <constraint firstAttribute="width" constant="92" id="n4j-fV-tUE"/>
                                 </constraints>
                                 <state key="normal" title="Ouvrir la map"/>
+                                <connections>
+                                    <action selector="openMap:" destination="pzL-88-5Q7" eventType="touchUpInside" id="k1W-87-CQp"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cZY-Lc-BHf">
                                 <rect key="frame" x="289" y="254" width="70" height="30"/>
@@ -70,6 +73,9 @@
                                     <constraint firstAttribute="height" constant="30" id="r6a-vL-biV"/>
                                 </constraints>
                                 <state key="normal" title="Partager"/>
+                                <connections>
+                                    <action selector="share:" destination="pzL-88-5Q7" eventType="touchUpInside" id="PTP-5h-2Qe"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vMb-8c-GqW">
                                 <rect key="frame" x="16" y="254" width="57" height="30"/>
@@ -78,6 +84,9 @@
                                     <constraint firstAttribute="height" constant="30" id="eQG-2o-VUD"/>
                                 </constraints>
                                 <state key="normal" title="Appeler"/>
+                                <connections>
+                                    <action selector="call:" destination="pzL-88-5Q7" eventType="touchUpInside" id="JwH-BK-Mt1"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -104,6 +113,10 @@
                             <constraint firstItem="QUC-rZ-ASO" firstAttribute="leading" secondItem="vMb-8c-GqW" secondAttribute="trailing" constant="68" id="wII-vV-8eL"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="image" destination="R3w-NN-4R0" id="g8k-AA-Rau"/>
+                        <outlet property="map" destination="iHr-Zn-wL2" id="CYc-Ks-lEF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ADP-nv-WVO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
