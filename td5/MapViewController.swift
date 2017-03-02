@@ -17,8 +17,8 @@ public class Poi {
     var Image : String = "";
     var Latitude : Float = 0.0;
     var Longitude : Float = 0.0;
+    var Phone: String = "";
 }
-
 
 class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
@@ -77,6 +77,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
                     poi.Image = (pois.element?.allAttributes["image"]?.text)!
                     poi.Latitude = Float((pois.element?.allAttributes["latitude"]?.text)!)!
                     poi.Longitude = Float((pois.element?.allAttributes["longitude"]?.text)!)!
+                    poi.Phone = (pois.element?.allAttributes["phone"]?.text)!
                     
                     poisList.append(poi);
                     poisListString.append(poi.Name);

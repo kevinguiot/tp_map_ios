@@ -11,27 +11,33 @@ import MapKit
 
 class InfoPinViewController: UIViewController {
     
+    //Déclarations
+    var poi = Poi()
+    
     //Outlets
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var map: MKMapView!
     
-    
     //Actions
     @IBAction func call(_ sender: UIButton) {
+
+        //On créé l'URL d'appel
+        let url = NSURL(string: "tel://" + poi.Phone);
         
+        //On procède à l'appel
+        UIApplication.shared.open(url as! URL, options: [:], completionHandler: nil)
     }
     
     @IBAction func openMap(_ sender: UIButton) {
         
-    }
-    
-    @IBAction func share(_ sender: UIButton) {
         
     }
     
-    //Déclarations
-    var poi = Poi()
-    
+    @IBAction func share(_ sender: UIButton) {
+
+        
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
