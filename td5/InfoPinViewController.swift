@@ -30,7 +30,12 @@ class InfoPinViewController: UIViewController {
     
     @IBAction func openMap(_ sender: UIButton) {
         
-        
+        //On ouvre la map
+        openMapForPlace(
+            latitude: CLLocationDegrees(poi.Latitude),
+            longitude: CLLocationDegrees(poi.Longitude),
+            name: poi.Name
+        );
     }
     
     @IBAction func share(_ sender: UIButton) {
@@ -72,4 +77,18 @@ func getImageFromURL(url: String) -> UIImage {
     }
     
     return image.image!
+}
+
+func openMapForPlace(latitude: CLLocationDegrees, longitude: CLLocationDegrees, name: String) {
+    let regionDistance:CLLocationDistance = 100
+    let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+    let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
+    let options = [
+        MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+        MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
+    ]
+    let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+    let mapItem = MKMapItem(placemark: placemark)
+    mapItem.name = name;
+    mapItem.openInMaps(launchOptions: options)
 }
