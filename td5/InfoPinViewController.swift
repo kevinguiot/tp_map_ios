@@ -39,8 +39,10 @@ class InfoPinViewController: UIViewController {
     }
     
     @IBAction func share(_ sender: UIButton) {
-
-        
+        let text = poi.Name;
+        let image: UIImage = getImageFromURL(url: poi.Image);
+        let shareVC: UIActivityViewController = UIActivityViewController(activityItems: [(image), text], applicationActivities: nil)
+        self.present(shareVC, animated: true, completion: nil)
     }
 
     override func viewDidLoad() {
