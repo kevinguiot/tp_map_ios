@@ -28,6 +28,24 @@
             </objects>
             <point key="canvasLocation" x="612" y="71.514242878560722"/>
         </scene>
+        <!--Info Pin View Controller-->
+        <scene sceneID="KOg-I4-mYs">
+            <objects>
+                <viewController restorationIdentifier="InfoPinVue" storyboardIdentifier="InfoPin" id="pzL-88-5Q7" customClass="InfoPinViewController" customModule="td5" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Q8e-mg-nsf"/>
+                        <viewControllerLayoutGuide type="bottom" id="yol-Fp-27P"/>
+                    </layoutGuides>
+                    <view key="view" opaque="NO" contentMode="scaleToFill" id="gvI-hE-FBQ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ADP-nv-WVO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1502" y="70"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="hUg-W6-36E">
             <objects>
@@ -38,6 +56,7 @@
                     </navigationBar>
                     <connections>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="X89-VS-0O0"/>
+                        <segue destination="pzL-88-5Q7" kind="show" identifier="showDetail" id="rBk-tC-VBk"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tIz-Pk-Rv3" userLabel="First Responder" sceneMemberID="firstResponder"/>

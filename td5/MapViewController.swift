@@ -129,17 +129,17 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     //Fonction pour détecter le bouton (i)
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
 
+        //On se base sur la vue d'exemple
+        let InfoPinViewController = self.storyboard?.instantiateViewController(withIdentifier: "InfoPin") as! InfoPinViewController;
+        
         //On récupère le poi
         let poi = getPin(title: (view.annotation?.title!)!)
         
-        //On créer une nouvelle vue
-        let vue = InfoPinViewController();
+        //On envoie le poi à la vue
+        InfoPinViewController.poi = poi
         
-        //On envoie le poi
-        vue.poi = poi
-        
-        //On ajoute la nouvelle vue
-        navigationController?.pushViewController(vue, animated: true)
+        //On push la vue
+        self.navigationController?.pushViewController(InfoPinViewController, animated: true)
     }
     
     //Fonction permettant de récupérer un poi en fonction de son nom
@@ -154,8 +154,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         return poi
     }
 }
-
-
 
 //Fonction permettant de récupérer une adresse d'un marqueur
 func getAddress(placemark : CLPlacemark) -> String {
