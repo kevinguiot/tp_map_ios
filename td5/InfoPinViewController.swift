@@ -35,16 +35,35 @@ class InfoPinViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print(poi.Name)
-        print(poi.Image)
- 
+        let imageFromURL = getImageFromURL(url: poi.Image);
+        
+        //On mets à jour les informations
+        image.image = imageFromURL
         
         self.title = poi.Name;
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+}
+
+//Fonction permettant de récupérer une image via une URL
+func getImageFromURL(url: String) -> UIImage {
+    
+    let image = UIImageView();
+    
+    if let data = try? Data(contentsOf: NSURL(string: url) as! URL) {
+        image.alpha = 0
+        
+        UIView.transition(with: image, duration: 0.5, options: UIViewAnimationOptions(), animations: { () -> Void in
+            image.image = UIImage(data: data)
+            image.alpha = 1
+        }, completion: { (ended) -> Void in
+            
+        })
+    }
+    
+    return image.image!
 }
