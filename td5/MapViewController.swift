@@ -46,8 +46,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
        
         self.title = "Affichage des marqueurs";
         
-        
-        
         //Coordonnées de Cannes
         let coordinatesCannes: [Float] = [
             43.551534,
@@ -110,7 +108,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
             //On récupère l'adresse de l'emplacement
             CLGeocoder().reverseGeocodeLocation(location, completionHandler: {(placemarks, error) in
-                let address = getAddress(placemark: (placemarks?[0])!)
+                let address = self.getAddress(placemark: (placemarks?[0])!)
                 poi.subtitle = address;
             })
             
@@ -126,8 +124,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         map.isScrollEnabled = true
         map.showsUserLocation = true
 
+        //Delegates
         locationManager.delegate = self
-        
         map.delegate = self
         
         self.view.addSubview(map);
@@ -186,47 +184,47 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         
         return poi
     }
-}
-
-//Fonction permettant de récupérer une adresse d'un marqueur
-func getAddress(placemark : CLPlacemark) -> String {
     
-    var adresse : String = ""
-    
-    /*format Chine*/
-    if placemark.isoCountryCode == "TW" {
-        if placemark.country != nil {
-            adresse = placemark.country!
+    //Fonction permettant de récupérer une adresse d'un marqueur
+    func getAddress(placemark : CLPlacemark) -> String {
+        
+        var adresse : String = ""
+        
+        /*format Chine*/
+        if placemark.isoCountryCode == "TW" {
+            if placemark.country != nil {
+                adresse = placemark.country!
+            }
+            if placemark.subAdministrativeArea != nil {
+                adresse = adresse + placemark.subAdministrativeArea! + ", "
+            }
+            if placemark.postalCode != nil {
+                adresse = adresse + placemark.postalCode! + " "
+            }
+            if placemark.locality != nil {
+                adresse = adresse + placemark.locality!
+            }
+            if placemark.thoroughfare != nil {
+                adresse = adresse + placemark.thoroughfare!
+            }
+            if placemark.subThoroughfare != nil {
+                adresse = adresse + placemark.subThoroughfare!
+            }
+        } else {
+            if placemark.subThoroughfare != nil {
+                adresse = placemark.subThoroughfare! + " "
+            }
+            if placemark.thoroughfare != nil {
+                adresse = adresse + placemark.thoroughfare! + ", "
+            }
+            if placemark.postalCode != nil {
+                adresse = adresse + placemark.postalCode! + " "
+            }
+            if placemark.locality != nil {
+                adresse = adresse + placemark.locality!
+            }
         }
-        if placemark.subAdministrativeArea != nil {
-            adresse = adresse + placemark.subAdministrativeArea! + ", "
-        }
-        if placemark.postalCode != nil {
-            adresse = adresse + placemark.postalCode! + " "
-        }
-        if placemark.locality != nil {
-            adresse = adresse + placemark.locality!
-        }
-        if placemark.thoroughfare != nil {
-            adresse = adresse + placemark.thoroughfare!
-        }
-        if placemark.subThoroughfare != nil {
-            adresse = adresse + placemark.subThoroughfare!
-        }
-    } else {
-        if placemark.subThoroughfare != nil {
-            adresse = placemark.subThoroughfare! + " "
-        }
-        if placemark.thoroughfare != nil {
-            adresse = adresse + placemark.thoroughfare! + ", "
-        }
-        if placemark.postalCode != nil {
-            adresse = adresse + placemark.postalCode! + " "
-        }
-        if placemark.locality != nil {
-            adresse = adresse + placemark.locality!
-        }
+        
+        return adresse
     }
-    
-    return adresse
 }
