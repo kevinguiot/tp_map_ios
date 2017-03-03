@@ -46,7 +46,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
        
         self.title = "Affichage des marqueurs";
         
-        map.delegate = self
+        
         
         //Coordonnées de Cannes
         let coordinatesCannes: [Float] = [
@@ -126,6 +126,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         map.isScrollEnabled = true
         map.showsUserLocation = true
 
+        locationManager.delegate = self
+        
+        map.delegate = self
+        
         self.view.addSubview(map);
     }
 

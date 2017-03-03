@@ -14,6 +14,7 @@ class InfoPinViewController: UIViewController,  CLLocationManagerDelegate, MKMap
     
     //Déclarations
     var poi = Poi()
+    var route : MKRoute!
     
     //On prépare la localisation
     let locationManager = CLLocationManager()
@@ -32,6 +33,7 @@ class InfoPinViewController: UIViewController,  CLLocationManagerDelegate, MKMap
         UIApplication.shared.open(url as! URL, options: [:], completionHandler: nil)
     }
     
+    //Fonction pour ouvrir la map
     @IBAction func openMap(_ sender: UIButton) {
         
         //On ouvre la map
@@ -42,6 +44,7 @@ class InfoPinViewController: UIViewController,  CLLocationManagerDelegate, MKMap
         );
     }
     
+    //Fonction pour partager
     @IBAction func share(_ sender: UIButton) {
         let text = poi.Name;
         let image: UIImage = getImageFromURL(url: poi.Image);
@@ -52,6 +55,7 @@ class InfoPinViewController: UIViewController,  CLLocationManagerDelegate, MKMap
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Demandes de l'affichage de la position de l'utilisateur
         self.locationManager.requestAlwaysAuthorization()
         self.locationManager.requestWhenInUseAuthorization()
         
@@ -61,17 +65,74 @@ class InfoPinViewController: UIViewController,  CLLocationManagerDelegate, MKMap
             locationManager.startUpdatingLocation()
         }
         
-        let imageFromURL = getImageFromURL(url: poi.Image);
+        //On précise la région
+        let latDelta:CLLocationDegrees = 0.05
+        let lonDelta:CLLocationDegrees = 0.05
+        let span = MKCoordinateSpanMake(latDelta, lonDelta)
+        let location = CLLocationCoordinate2DMake(
+            CLLocationDegrees(poi.Latitude),
+            CLLocationDegrees(poi.Longitude)
+        )
+        let region = MKCoordinateRegionMake(location, span);
+        map.setRegion(region, animated: false)
         
-        //On mets à jour les informations
-        image.image = imageFromURL
+        //Création des PointAnnotation
+        let poiAnnotation = MKPointAnnotation()
         
-        self.title = poi.Name;
+        //On récupère les coordonnées du pin
+        let coordinatePin = CLLocationCoordinate2DMake(CLLocationDegrees(poi.Latitude), CLLocationDegrees(poi.Longitude));
         
+        poiAnnotation.coordinate = coordinatePin
+        poiAnnotation.title = poi.Name
+        map.addAnnotation(poiAnnotation)
+        
+        //Création des Placemark (si la localisation est affichée
+        if(String(describing: locationManager.location?.coordinate.latitude) != "") {
+            
+            let markPin = MKPlacemark(coordinate: coordinatePin)
+            let markPos = MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: (CLLocationDegrees((locationManager.location?.coordinate.latitude)!)), longitude: CLLocationDegrees((locationManager.location?.coordinate.longitude)!)))
+
+            //On prépare la direction entre la localisation et la position
+            let directionsRequest = MKDirectionsRequest()
+            
+            directionsRequest.source = MKMapItem(placemark: markPin)
+            directionsRequest.destination = MKMapItem(placemark: markPos)
+            
+            directionsRequest.transportType = MKDirectionsTransportType.automobile
+            let directions = MKDirections(request: directionsRequest)
+            
+            directions.calculate(completionHandler: {
+                response, error in
+                
+                if error == nil {
+                    self.route = response!.routes[0] as MKRoute
+                    self.map.add(self.route.polyline)
+                }
+            })
+            
+        }
+
+        //On mets à jour les paramètres de la map
         map.mapType = MKMapType.standard
         map.isZoomEnabled = true
         map.isScrollEnabled = true
         map.showsUserLocation = true
+        map.delegate = self
+        
+        //On mets à jour les informations de la vue
+        let imageFromURL = getImageFromURL(url: poi.Image);
+        
+        image.image = imageFromURL
+        
+        self.title = poi.Name;
+    }
+    
+    //Fonction pour afficher une route
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        let myLineRenderer = MKPolylineRenderer(polyline: route.polyline)
+        myLineRenderer.strokeColor = UIColor.blue
+        myLineRenderer.lineWidth = 3
+        return myLineRenderer
     }
 
     override func didReceiveMemoryWarning() {
