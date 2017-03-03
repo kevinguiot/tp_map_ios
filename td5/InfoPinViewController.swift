@@ -8,12 +8,16 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
-class InfoPinViewController: UIViewController {
+class InfoPinViewController: UIViewController,  CLLocationManagerDelegate, MKMapViewDelegate {
     
     //Déclarations
     var poi = Poi()
     
+    //On prépare la localisation
+    let locationManager = CLLocationManager()
+
     //Outlets
     @IBOutlet weak var image: UIImageView!
     @IBOutlet weak var map: MKMapView!
@@ -48,49 +52,65 @@ class InfoPinViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
+        
         let imageFromURL = getImageFromURL(url: poi.Image);
         
         //On mets à jour les informations
         image.image = imageFromURL
         
         self.title = poi.Name;
+        
+        map.mapType = MKMapType.standard
+        map.isZoomEnabled = true
+        map.isScrollEnabled = true
+        map.showsUserLocation = true
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-}
-
-//Fonction permettant de récupérer une image via une URL
-func getImageFromURL(url: String) -> UIImage {
     
-    let image = UIImageView();
-    
-    if let data = try? Data(contentsOf: NSURL(string: url) as! URL) {
-        image.alpha = 0
+    //Fonction permettant de récupérer une image via une URL
+    func getImageFromURL(url: String) -> UIImage {
         
-        UIView.transition(with: image, duration: 0.5, options: UIViewAnimationOptions(), animations: { () -> Void in
+        let image = UIImageView();
+        
+        if let data = try? Data(contentsOf: NSURL(string: url) as! URL) {
             image.image = UIImage(data: data)
             image.alpha = 1
-        }, completion: { (ended) -> Void in
-            
-        })
+        }
+        
+        return image.image!
     }
     
-    return image.image!
+    //Fonction permettant d'ouvrir Plan avec des coordonnées précises
+    func openMapForPlace(latitude: CLLocationDegrees, longitude: CLLocationDegrees, name: String) {
+        let regionDistance:CLLocationDistance = 100
+        let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
+        let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
+        
+        //On précise les options
+        let options = [
+            MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
+            MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span),
+            MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving,
+        ] as [String : Any]
+        
+        let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
+        let mapItem = MKMapItem(placemark: placemark)
+
+        mapItem.name = name;
+        mapItem.openInMaps(launchOptions: options)
+    }
 }
 
-func openMapForPlace(latitude: CLLocationDegrees, longitude: CLLocationDegrees, name: String) {
-    let regionDistance:CLLocationDistance = 100
-    let coordinates = CLLocationCoordinate2DMake(latitude, longitude)
-    let regionSpan = MKCoordinateRegionMakeWithDistance(coordinates, regionDistance, regionDistance)
-    let options = [
-        MKLaunchOptionsMapCenterKey: NSValue(mkCoordinate: regionSpan.center),
-        MKLaunchOptionsMapSpanKey: NSValue(mkCoordinateSpan: regionSpan.span)
-    ]
-    let placemark = MKPlacemark(coordinate: coordinates, addressDictionary: nil)
-    let mapItem = MKMapItem(placemark: placemark)
-    mapItem.name = name;
-    mapItem.openInMaps(launchOptions: options)
-}
+

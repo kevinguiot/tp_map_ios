@@ -10,10 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Map View Controller-->
+        <!--Affichage des marqueurs-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="MapViewController" customModule="td5" sceneMemberID="viewController">
+                <viewController title="Affichage des marqueurs" id="BYZ-38-t0r" customClass="MapViewController" customModule="td5" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -55,15 +55,15 @@
                                     <constraint firstAttribute="height" constant="375" id="pn9-sW-7FE"/>
                                 </constraints>
                             </mapView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QUC-rZ-ASO">
-                                <rect key="frame" x="141" y="254" width="92" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vMb-8c-GqW">
+                                <rect key="frame" x="16" y="254" width="57" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="PGR-uP-6Sk"/>
-                                    <constraint firstAttribute="width" constant="92" id="n4j-fV-tUE"/>
+                                    <constraint firstAttribute="width" constant="57" id="dW9-3j-Y4j"/>
+                                    <constraint firstAttribute="height" constant="30" id="eQG-2o-VUD"/>
                                 </constraints>
-                                <state key="normal" title="Ouvrir la map"/>
+                                <state key="normal" title="Appeler"/>
                                 <connections>
-                                    <action selector="openMap:" destination="pzL-88-5Q7" eventType="touchUpInside" id="k1W-87-CQp"/>
+                                    <action selector="call:" destination="pzL-88-5Q7" eventType="touchUpInside" id="JwH-BK-Mt1"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cZY-Lc-BHf">
@@ -77,15 +77,15 @@
                                     <action selector="share:" destination="pzL-88-5Q7" eventType="touchUpInside" id="PTP-5h-2Qe"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vMb-8c-GqW">
-                                <rect key="frame" x="16" y="254" width="57" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QUC-rZ-ASO">
+                                <rect key="frame" x="141" y="254" width="92" height="30"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="57" id="dW9-3j-Y4j"/>
-                                    <constraint firstAttribute="height" constant="30" id="eQG-2o-VUD"/>
+                                    <constraint firstAttribute="height" constant="30" id="PGR-uP-6Sk"/>
+                                    <constraint firstAttribute="width" constant="92" id="n4j-fV-tUE"/>
                                 </constraints>
-                                <state key="normal" title="Appeler"/>
+                                <state key="normal" title="Ouvrir la map"/>
                                 <connections>
-                                    <action selector="call:" destination="pzL-88-5Q7" eventType="touchUpInside" id="JwH-BK-Mt1"/>
+                                    <action selector="openMap:" destination="pzL-88-5Q7" eventType="touchUpInside" id="k1W-87-CQp"/>
                                 </connections>
                             </button>
                         </subviews>

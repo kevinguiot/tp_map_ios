@@ -29,9 +29,23 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
     var poisList = [Poi]()
     var poisListString = [String]()
     
+    //Préparation à la localisation
+    let locationManager = CLLocationManager();
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.requestWhenInUseAuthorization()
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+            locationManager.startUpdatingLocation()
+        }
        
+        self.title = "Affichage des marqueurs";
+        
         map.delegate = self
         
         //Coordonnées de Cannes
@@ -42,11 +56,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
 
         //Gestion de la map
         map.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-        map.mapType = MKMapType.standard
-        map.isZoomEnabled = true
-        map.isScrollEnabled = true
-        map.showsUserLocation = true
-        
+
         //Ajout du centre
         map.centerCoordinate = CLLocationCoordinate2D(latitude: CLLocationDegrees(coordinatesCannes[0]),longitude: CLLocationDegrees(coordinatesCannes[1]));
         
@@ -111,6 +121,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
             map.addAnnotation(pinAnnotationView.annotation!)
         }
         
+        map.mapType = MKMapType.standard
+        map.isZoomEnabled = true
+        map.isScrollEnabled = true
+        map.showsUserLocation = true
+
         self.view.addSubview(map);
     }
 
@@ -136,21 +151,34 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, MKMapViewD
         //On récupère le poi
         let poi = getPin(title: (view.annotation?.title!)!)
         
-        //On envoie le poi à la vue
-        InfoPinViewController.poi = poi
-        
-        //On push la vue
-        self.navigationController?.pushViewController(InfoPinViewController, animated: true)
+        //Si le poi n'est pas vide
+        if(poi.Name != "") {
+            
+            //On envoie le poi à la vue
+            InfoPinViewController.poi = poi
+            
+            //On push la vue
+            self.navigationController?.pushViewController(InfoPinViewController, animated: true)
+        }
     }
     
     //Fonction permettant de récupérer un poi en fonction de son nom
     func getPin(title: String) -> Poi {
         
-        //On récupère l'indice du poi dans le tableau de string
-        let indicePoi = (poisListString.index(of: title)!)
+        var poi = Poi()
         
-        //On récupère le poi
-        let poi = poisList[indicePoi]
+        //On regarde si le pin existe
+        if(poisListString.contains(title)) {
+        
+            //On récupère l'indice du poi dans le tableau de string
+            let indicePoi = (poisListString.index(of: title)!)
+            
+            //On récupère le poi
+            poi = poisList[indicePoi]
+    
+        } else {
+            print("Poi inexistant");
+        }
         
         return poi
     }
