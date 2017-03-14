@@ -1,6 +1,8 @@
 # tp_map_ios
 Application qui gère l'utilisation des maps et des marqueurs. Les marqueurs proviennent d'un fichier XML distant.
 
+# Screenshots
+
 ## Page d'accueil
 <img src="https://raw.githubusercontent.com/kevinguiot/tp_map_ios/master/screenshots/home.png" width="300">
 
