@@ -18,5 +18,5 @@ Application qui gère l'utilisation des maps et des marqueurs. Les marqueurs pro
 ## Résultat sur Facebook
 <img src="https://github.com/kevinguiot/tp_map_ios/blob/master/screenshots/facebook.png" width="300">
 
-## Ouverture de l'application Plans via l'application TD5
+## Ouverture de Plans via l'application
 <img src="https://github.com/kevinguiot/tp_map_ios/blob/master/screenshots/plan.png" width="300">
